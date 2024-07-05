@@ -104,22 +104,19 @@ InitChannel(LISTPTR Input, MAPSIZE *Map, int deltat, CHANNEL *channel,
 
     printf("\tReading Road data\n");
 
-    if ((channel->road_class =
-	 channel_read_classes(StrEnv[road_class].VarStr, road_class) == NULL)) {
-      ReportError(StrEnv[road_class].VarStr, 5);
+    if ((channel->road_class = channel_read_classes(StrEnv[road_class].VarStr, road_class)) == NULL) {
+        ReportError(StrEnv[road_class].VarStr, 5);
     }
-    if ((channel->roads =
-	 channel_read_network(StrEnv[road_network].VarStr,
-			      channel->road_class, MaxRoadID)) == NULL) {
-      ReportError(StrEnv[road_network].VarStr, 5);
+    if ((channel->roads = channel_read_network(StrEnv[road_network].VarStr,
+                                               channel->road_class, MaxRoadID)) == NULL) {
+        ReportError(StrEnv[road_network].VarStr, 5);
     }
-    if ((channel->road_map =
-	 channel_grid_read_map(channel->roads,
-			       StrEnv[road_map].VarStr, SoilMap)) == NULL) {
-      ReportError(StrEnv[road_map].VarStr, 5);
+    if ((channel->road_map = channel_grid_read_map(channel->roads,
+                                                   StrEnv[road_map].VarStr, SoilMap)) == NULL) {
+        ReportError(StrEnv[road_map].VarStr, 5);
     }
     error_handler(ERRHDL_STATUS,
-		  "InitChannel: computing road network routing coefficients");
+                  "InitChannel: computing road network routing coefficients");
     channel_routing_parameters(channel->roads, (double) deltat);
   }
 }
